@@ -31,14 +31,35 @@ def search(request):
     })
     else:
 
-
-        
         return render(request, "encyclopedia/search.html", {
             "query": query,
             "entry_list": entry_list
         })
 
+def new_page(request):
+    title = request.GET.get('title')
+    content = request.GET.get('text-area')
+    err = None
+    entry_list = util.list_entries()
+    if not title or not content:
+        err  ="Please enter both title and description!"
 
+    elif title in entry_list:
+        err = "An entry with this title already exists!"
+
+    if err:
+        return render(request, "encyclopedia/new.html", {
+            "err": err,
+            "title": title,
+            "text": content
+        })
+    else:
+        util.save_entry(title, content)
+        return render(request, "encyclopedia/new.html", {
+            "err": "submitted",
+            "title": "",
+            "text": ""
+        })
 
 
 
