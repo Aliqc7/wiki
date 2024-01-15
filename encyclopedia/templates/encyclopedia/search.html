@@ -1,0 +1,19 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block body %}
+
+{% if query %}
+    <h2> Did you mean... </h2>
+    <ul>     
+        {% for entry in entry_list%}
+        {% if query in entry %}
+        <a href="/wiki/{{entry}}"><li>{{ entry }}</li></a>
+        {% endif%}
+        {% endfor %}
+    </ul>
+{% else %}
+<h2> Use the search box on the left to search for a page </h2>
+{% endif %}
+
+
+{% endblock %}
