@@ -11,8 +11,11 @@ def index(request):
     })
 
 def entry(request, title):
+    content = util.get_entry(title)
+    if content:
+        content = markdowner.convert(content)
+    
     return render(request, "encyclopedia/entry.html", {
-        "title": title.upper(),
-        "content": markdowner.convert(util.get_entry(title.upper()))
+        "content": content
     })
 
