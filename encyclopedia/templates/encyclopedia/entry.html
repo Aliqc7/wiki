@@ -11,5 +11,10 @@ Encyclopedia: {{title}}
         <h2> The requested page was not found! </h2>
     {% endif %}
 
+    <form action="{% url 'edit' %}">
+        <input type="submit" value="Edit entry">
+        <input type = "hidden" name = "title" value = "{{title}}">
+    </form>
+    
 
 {% endblock %}

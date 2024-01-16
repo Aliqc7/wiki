@@ -16,7 +16,8 @@ def entry(request, title):
         content = markdowner.convert(content)
     
     return render(request, "encyclopedia/entry.html", {
-        "content": content
+        "content": content,
+        "title": title
     })
 
 def search(request):
@@ -60,6 +61,21 @@ def new_page(request):
             "title": "",
             "text": ""
         })
+
+def edit(request):
+    title = request.GET.get('title')
+    content = util.get_entry(title)
+    return render (request, "encyclopedia/edit.html", {
+        "content": content,
+        "title": title
+    })
+
+def save(request):
+    title = request.GET.get('title')
+    content = request.GET.get('text-area')
+    util.save_entry(title, content)
+    return entry(request, title)
+
 
 
 
