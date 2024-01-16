@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import util
 import markdown2
+import random
 
 markdowner = markdown2.Markdown()
 
@@ -62,7 +63,7 @@ def new_page(request):
             "text": ""
         })
 
-def edit(request):
+def edit_page(request):
     title = request.GET.get('title')
     content = util.get_entry(title)
     return render (request, "encyclopedia/edit.html", {
@@ -70,11 +71,18 @@ def edit(request):
         "title": title
     })
 
-def save(request):
+def save_page(request):
     title = request.GET.get('title')
     content = request.GET.get('text-area')
     util.save_entry(title, content)
     return entry(request, title)
+
+def random_page(request):
+    entry_list = util.list_entries()
+    random_index = random.randint(0, len(entry_list) - 1)
+    title = entry_list[random_index]
+    return entry(request, title)
+
 
 
 
